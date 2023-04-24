@@ -23,7 +23,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MovieReviewsAPIService {
     @GET("{movie_id}/reviews?api_key=$API_KEY")
-    fun getCoursesFromAPI(@Path("movieID") movieID: Int):
+    fun getMovieReviewsFromAPI(@Path("movieID") movieID: Int):
             Call<MutableList<Review>>
 }
 
