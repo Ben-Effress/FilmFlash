@@ -3,17 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
 
-    <TextView
-        android:id="@+id/movie_item_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Movie Item"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+    <ImageView
+        android:id="@+id/movie_item_poster"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/poster_description"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:divider="@drawable/space_vertical_10_dp"
+        android:orientation="vertical"
+        android:showDividers="middle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/movie_item_poster"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/movie_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Movie Title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RatingBar
+            android:id="@+id/movie_item_rating_bar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="@color/yellow"
+            android:progressTintMode="src_atop"
+            android:secondaryProgressTint="@color/yellow"
+            android:secondaryProgressTintMode="src_atop"
+            android:stepSize="0.5" />
+
+        <TextView
+            android:id="@+id/movie_item_release_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Release on: YYYY-MM-DD" />
+
+        <TextView
+            android:id="@+id/movie_item_overview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Movie overview (3 lines), end with ..." />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

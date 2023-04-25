@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FilmFlash</string>
+    <string name="poster_description">Poster</string>
 </resources>
