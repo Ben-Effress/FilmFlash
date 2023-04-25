@@ -23,7 +23,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MovieListAPIService {
     @GET("now_playing?api_key=$API_KEY&page={pageNumber}")
-    fun getCoursesFromAPI(@Path("pageNumber") pageNumber: Int):
+    fun getMovieListFromAPI(@Path("pageNumber") pageNumber: Int):
             Call<MutableList<Movie>>
 }
 
