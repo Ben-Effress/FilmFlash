@@ -59,7 +59,9 @@
             android:id="@+id/movie_item_overview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Movie overview (3 lines), end with ..." />
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Movie overview" />
 
     </LinearLayout>
 
