@@ -10,6 +10,8 @@
         android:id="@+id/movie_overview_rv"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -3,5 +3,14 @@
     <style name="Theme.FilmFlash" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
+        <item name="android:minHeight">23dip</item>
+        <item name="android:maxHeight">25dip</item>
     </style>
 </resources>
