@@ -34,6 +34,11 @@ class MovieReviewsViewModel(val application: Application, private val movieID: I
                     val markdownContent = reviewContent.replace("\\r\\n", "\n")
                     val spannedContent = markwon.toMarkdown(markdownContent)
                     review.formattedContent = spannedContent
+
+                    val contentReplacedNewLines = reviewContent.replace("\\r\\n", " ")
+                    val contentRemovedMarkdown = contentReplacedNewLines.replace(
+                        "[*_|~#`\\]\\[()^>]".toRegex(), "")
+                    review.contentPreview = contentRemovedMarkdown
                 }
                 _reviewsList.value = reviews?.toMutableList()
             }

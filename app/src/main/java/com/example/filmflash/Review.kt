@@ -6,5 +6,6 @@ data class Review(
     val authorDetailsAvatarPath: String?,
     val authorDetailsRating: Double?,
     val content: String,
-    var formattedContent: Spanned? = null
+    var formattedContent: Spanned? = null,
+    var contentPreview: String = ""
 )
