@@ -18,16 +18,18 @@ class MovieListViewModel: ViewModel() {
     }
 
     fun getMovieList() {
-        MovieListAPI.retrofitService.getMovieListFromAPI(1).enqueue(object:
-            Callback<MutableList<Movie>> {
-            override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
-                _movieList.value = response.body()
+        MovieListAPI.retrofitService.getMovieListFromAPI("4681e090d7dce827b558f805c05e0c8a", 1).enqueue(object:
+            Callback<MovieListResponse> {
+            override fun onResponse(call: Call<MovieListResponse>, response: Response<MovieListResponse>) {
+                _movieList.value = response.body()?.movies?.toMutableList()
+                Log.i("SUI", response.toString())
             }
 
-            override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
+            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
                 Log.i("API", "ERROR: " + t.message)
             }
 
         })
     }
+
 }
