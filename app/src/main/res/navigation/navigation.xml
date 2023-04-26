@@ -7,5 +7,18 @@
     <fragment
         android:id="@+id/movieListFragment2"
         android:name="com.example.filmflash.MovieListFragment"
-        android:label="MovieListFragment" />
+        android:label="MovieListFragment" >
+        <action
+            android:id="@+id/action_movieListFragment2_to_movieInfoFragment3"
+            app:destination="@id/movieInfoFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/movieInfoFragment3"
+        android:name="com.example.filmflash.MovieInfoFragment"
+        android:label="fragment_movie_info"
+        tools:layout="@layout/fragment_movie_info" >
+        <argument
+            android:name="movieID"
+            app:argType="integer" />
+    </fragment>
 </navigation>
