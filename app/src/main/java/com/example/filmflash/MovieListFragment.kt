@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -25,7 +26,7 @@ class MovieListFragment : Fragment() {
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this)[MovieListViewModel::class.java]
-
+        (activity as AppCompatActivity).supportActionBar?.title = "Now Playing"
 
         Log.i("Movie List", viewModel.movieList.toString())
         viewModel.movieList.observe(viewLifecycleOwner, Observer { movieList ->
