@@ -1,6 +1,6 @@
 package com.example.filmflash
 
-import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,39 +11,46 @@ import retrofit2.Response
 import io.noties.markwon.Markwon
 
 
-class MovieReviewsViewModel(val application: Application, private val movieID: Int): ViewModel() {
-    private val _reviewsList = MutableLiveData<MutableList<Review>>()
-    val reviewList: LiveData<MutableList<Review>>
+class MovieReviewsViewModel: ViewModel() {
+    private val _reviewsList = MutableLiveData<MutableList<ReviewWithAll>>()
+    val reviewList: LiveData<MutableList<ReviewWithAll>>
         get() = _reviewsList
 
     init {
-        getReviewsList()
+
     }
 
-    fun getReviewsList() {
+    fun getReviewsList(context: Context, movieID: Int) {
         MovieReviewsAPI.retrofitService.getMovieReviewsFromAPI(movieID).enqueue(object :
-            Callback<MutableList<Review>> {
+            Callback<MovieReview> {
             override fun onResponse(
-                call: Call<MutableList<Review>>,
-                response: Response<MutableList<Review>>
+                call: Call<MovieReview>,
+                response: Response<MovieReview>
             ) {
-                val reviews = response.body()
-                val markwon = Markwon.create(application)
+                Log.i("SUI", response.body().toString())
+                val reviews = response.body()?.results
+                val markwon = Markwon.builder(context).build()
+                val reviewsWithAll = mutableListOf<ReviewWithAll>()
                 reviews?.forEach{review: Review ->
+
                     val reviewContent = review.content
                     val markdownContent = reviewContent.replace("\\r\\n", "\n")
                     val spannedContent = markwon.toMarkdown(markdownContent)
-                    review.formattedContent = spannedContent
+
 
                     val contentReplacedNewLines = reviewContent.replace("\\r\\n", " ")
                     val contentRemovedMarkdown = contentReplacedNewLines.replace(
                         "[*_|~#`\\]\\[()^>]".toRegex(), "")
-                    review.contentPreview = contentRemovedMarkdown
+
+                    val reviewWithAll = ReviewWithAll(review.author,
+                        review.authorDetailsAvatarPath, review.authorDetailsRating, review.content,
+                    spannedContent, contentRemovedMarkdown)
+                    reviewsWithAll.add(reviewWithAll)
                 }
-                _reviewsList.value = reviews?.toMutableList()
+                _reviewsList.value = reviewsWithAll.toMutableList()
             }
 
-            override fun onFailure(call: Call<MutableList<Review>>, t: Throwable) {
+            override fun onFailure(call: Call<MovieReview>, t: Throwable) {
                 Log.i("API", "ERROR: " + t.message)
             }
 

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.filmflash.databinding.FragmentMovieListBinding
 
 class MovieListFragment : Fragment() {
@@ -30,7 +31,15 @@ class MovieListFragment : Fragment() {
             movieList?.let {
                 val adapter = MovieListAdapter(it)
                 recyclerView.adapter = adapter
+                adapter.setOnItemClickListener(object : MovieListAdapter.OnItemClickListener {
+                    override fun onItemClick(itemView: View?, position: Int) {
+                        val movieID = viewModel.movieList.value!![position].id
+                        val action = MovieListFragmentDirections.actionMovieListFragment2ToMovieInfoFragment3(movieID)
+                        findNavController().navigate(action)
+                    }
+                })
             }
+
         })
 
         return binding.root
