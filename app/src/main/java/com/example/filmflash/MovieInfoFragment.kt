@@ -101,7 +101,8 @@ class MovieInfoFragment : Fragment() {
                             val content = reviewsViewModel.reviewList.value!![position].content
                             val author = reviewsViewModel.reviewList.value!![position].author
                             val rating = reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
-                            val action = MovieInfoFragmentDirections.actionMovieInfoFragment3ToReviewFragment(content, author, rating)
+                            val avatarPath = reviewsViewModel.reviewList.value!![position].authorDetails.avatarPath
+                            val action = MovieInfoFragmentDirections.actionMovieInfoFragment3ToReviewFragment(content, author, rating, avatarPath)
                             findNavController().navigate(action)
                         }
                     })
