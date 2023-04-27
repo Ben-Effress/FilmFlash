@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">FilmFlash</string>
     <string name="poster_description">Poster</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="movie_backdrop_description">Movie Backdrop</string>
+    <string name="backdrop_shade_description">Backdrop Shade</string>
+    <string name="rating">Rating</string>
+    <string name="length">Length</string>
+    <string name="adult">Adult</string>
+    <string name="release_date">Release Date</string>
+    <string name="genres">Genres</string>
+    <string name="overview">Overview</string>
+    <string name="languages">Languages</string>
+    <string name="reviews">Reviews</string>
+    <string name="user_profile_picture_description">User Profile Picture</string>
 </resources>
