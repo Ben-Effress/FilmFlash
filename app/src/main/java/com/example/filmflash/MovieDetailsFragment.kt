@@ -60,6 +60,8 @@ class MovieDetailsFragment : Fragment() {
                 movieVotes.text = it.vote_count.toString() + " votes"
                 if (it.tagline.isNullOrBlank()) {
                     movieTagline.visibility = View.GONE
+                } else {
+                    movieTagline.text = it.tagline
                 }
                 movieReleaseDate.text = it.release_date
                 var genreText = ""
