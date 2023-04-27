@@ -23,10 +23,11 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as AppCompatActivity).supportActionBar?.title = "FilmFlash"
+
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this)[MovieListViewModel::class.java]
-        (activity as AppCompatActivity).supportActionBar?.title = "Now Playing"
 
         Log.i("Movie List", viewModel.movieList.toString())
         viewModel.movieList.observe(viewLifecycleOwner, Observer { movieList ->
