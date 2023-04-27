@@ -27,7 +27,7 @@ class ReviewFragment : Fragment() {
         _binding = FragmentReviewDetailsBinding.inflate(inflater, container, false)
         val content = args.content
         val author = args.author
-        (activity as AppCompatActivity).supportActionBar?.title = author + "'s Review"
+        (activity as AppCompatActivity).supportActionBar?.title = "Review Details"
         val rating = args.rating
         val markwon = Markwon.create(requireContext())
         val markdownContent = content.replace("\\r\\n", "\n")
@@ -39,10 +39,6 @@ class ReviewFragment : Fragment() {
             reviewItemRatingBar.rating = rating
         }
 
-
-
         return binding.root
     }
-
-
 }

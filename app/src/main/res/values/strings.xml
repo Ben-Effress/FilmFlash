@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">FilmFlash</string>
+    <string name="movie_details">Movie Details</string>
+    <string name="review_details">Review Details</string>
     <string name="poster_description">Poster</string>
     <string name="movie_backdrop_description">Movie Backdrop</string>
     <string name="backdrop_shade_description">Backdrop Shade</string>

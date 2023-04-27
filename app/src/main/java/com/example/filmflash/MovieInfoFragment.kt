@@ -50,7 +50,7 @@ class MovieInfoFragment : Fragment() {
         viewModel.movieInfo.observe(this, Observer {
             binding.apply {
                 movieTitle.text = it.title
-                (activity as AppCompatActivity).supportActionBar?.title = it.title
+                (activity as AppCompatActivity).supportActionBar?.title = "Movie Details"
                 movieRatingBar.rating = (it.vote_average / 2).toFloat()
                 val backdropPath =
                     "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
