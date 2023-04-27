@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.filmflash.databinding.FragmentReviewDetailsBinding
@@ -24,9 +25,9 @@ class ReviewFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentReviewDetailsBinding.inflate(inflater, container, false)
-
         val content = args.content
         val author = args.author
+        (activity as AppCompatActivity).supportActionBar?.title = author + "'s Review"
         val rating = args.rating
         val markwon = Markwon.create(requireContext())
         val markdownContent = content.replace("\\r\\n", "\n")
