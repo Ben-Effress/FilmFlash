@@ -4,12 +4,17 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     namespace 'com.example.filmflash'
     compileSdk 33
 
     buildFeatures {
         viewBinding true
+        buildConfig true
     }
 
     defaultConfig {
@@ -20,6 +25,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_KEY", apikeyProperties['API_KEY'])
     }
 
     buildTypes {

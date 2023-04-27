@@ -10,7 +10,7 @@ import retrofit2.http.Path
 
 private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 
-private const val API_KEY = "4681e090d7dce827b558f805c05e0c8a"
+private const val API_KEY = BuildConfig.API_KEY
 
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
