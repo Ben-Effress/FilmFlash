@@ -17,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.example.filmflash.databinding.FragmentMovieDetailsBinding
 
 class MovieDetailsFragment : Fragment() {
-
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
     private var movieId = 0
@@ -31,8 +30,8 @@ class MovieDetailsFragment : Fragment() {
     ): View? {
         (activity as AppCompatActivity).supportActionBar?.title =
             (activity as AppCompatActivity).getString(R.string.movie_details)
-        // Inflate the layout for this fragment
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        // Retrieve the movie id of this movie
         arguments?.let {
             movieId = it.getInt("movieId")
         }
@@ -43,27 +42,19 @@ class MovieDetailsFragment : Fragment() {
         reviewsViewModel = ViewModelProvider(this)[MovieReviewsViewModel::class.java]
         reviewsViewModel.getReviewsList(requireContext(), movieId)
 
-        viewModel.movieInfo.observe(viewLifecycleOwner, Observer {
+        viewModel.movieInfo.observe(viewLifecycleOwner) {
             binding.apply {
-                movieTitle.text = it.title
-                movieRatingBar.rating = (it.vote_average / 2).toFloat()
-                if (it.backdrop_path == null) {
+                // The movie backdrop
+                if (it.backdrop_path == null) {  // If there's no backdrop, use the logo image
                     movieBackdrop.setImageResource(R.drawable.logo_horizontal)
                 } else {
                     val backdropPath =
                         "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
                     Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
                 }
-                val hours = it.runtime / 60
-                val mins = it.runtime % 60
-                movieLength.text = hours.toString() + "h " + mins.toString() + "m"
-                if (it.adult) {
-                    movieAdult.text = "Yes"
-                } else {
-                    movieAdult.text = "No"
-                }
-                movieRating.text = String.format("%.1f", it.vote_average) + "/10"
-                movieVotes.text = it.vote_count.toString() + " votes"
+                // The movie title
+                movieTitle.text = it.title
+                // The movie tagline
                 if (it.tagline.isNullOrBlank()) {
                     movieTagline.visibility = View.GONE
                     val layoutParams = movieTitle.layoutParams as ViewGroup.MarginLayoutParams
@@ -72,7 +63,20 @@ class MovieDetailsFragment : Fragment() {
                 } else {
                     movieTagline.text = it.tagline
                 }
+                // The movie rating bar
+                movieRatingBar.rating = (it.vote_average / 2).toFloat()
+                // The movie rating score
+                movieRating.text = getString(R.string.rating_template, it.vote_average)
+                // The number of votes for the movie
+                movieVotes.text = getString(R.string.votes_template, it.vote_count)
+                // The movie length
+                movieLength.text =
+                    getString(R.string.length_template, it.runtime / 60, it.runtime % 60)
+                // Whether the movie is adult-only
+                movieAdult.text = if (it.adult) "Yes" else "No"
+                // The movie release date
                 movieReleaseDate.text = it.release_date
+                // The movie genres
                 var genreText = ""
                 for ((index, genre) in it.genres.withIndex()) {
                     genreText += genre.name
@@ -81,7 +85,9 @@ class MovieDetailsFragment : Fragment() {
                     }
                 }
                 movieGenres.text = genreText
+                // The movie overview
                 movieOverview.text = it.overview
+                // The movie languages
                 var languageText = ""
                 for ((index, language) in it.spoken_languages.withIndex()) {
                     languageText += language.english_name
@@ -90,20 +96,25 @@ class MovieDetailsFragment : Fragment() {
                     }
                 }
                 movieLanguages.text = languageText
-
+                // Add a 15dp space between each review in the review section
                 val itemSpacingDecoration =
                     ItemSpacingDecoration(resources.getDimensionPixelSize(R.dimen.margin_15dp))
                 reviewListRv.addItemDecoration(itemSpacingDecoration)
             }
-        })
+        }
 
         reviewsViewModel.reviewList.observe(viewLifecycleOwner, Observer {
             binding.apply {
-                reviewsTitle.text = "Reviews (" + it.size.toString() + ")"
+                // The review section title
+                reviewsTitle.text = getString(R.string.reviews_section_title, it.size)
                 val reviewRV = reviewListRv
+                // Toggle review section visibility
                 if (it.size > 0) {
                     noReviewsText.visibility = View.GONE
                     reviewRV.visibility = View.VISIBLE
+                } else {
+                    noReviewsText.visibility = View.VISIBLE
+                    reviewRV.visibility = View.GONE
                 }
                 it?.let {
                     val adapter = MovieReviewsAdapter(it)
@@ -114,14 +125,15 @@ class MovieDetailsFragment : Fragment() {
                             val content = reviewsViewModel.reviewList.value!![position].content
                             val author = reviewsViewModel.reviewList.value!![position].author
                             val rating =
-                                reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
+                                reviewsViewModel.reviewList.value!![position].authorDetails.rating
+                            val ratingNum = rating?.toFloat() ?: -1f  // If no rating, set to -1
                             val avatarPath =
                                 reviewsViewModel.reviewList.value!![position].authorDetails.avatarPath
                             val action =
                                 MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewDetailsFragment(
                                     content,
                                     author,
-                                    rating,
+                                    ratingNum,
                                     avatarPath
                                 )
                             findNavController().navigate(action)
@@ -131,6 +143,7 @@ class MovieDetailsFragment : Fragment() {
             }
         })
 
+        // Share button
         binding.shareButton.setOnClickListener {
             shareMovie()
         }
@@ -160,6 +173,7 @@ class MovieDetailsFragment : Fragment() {
     }
 }
 
+// A custom decoration consisted of white space of custom size between items
 class ItemSpacingDecoration(private val spacing: Int) : RecyclerView.ItemDecoration() {
     override fun getItemOffsets(
         outRect: Rect,

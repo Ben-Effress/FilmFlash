@@ -1,13 +1,11 @@
 package com.example.filmflash
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,17 +23,15 @@ class MovieListFragment : Fragment() {
     ): View? {
         (activity as AppCompatActivity).supportActionBar?.title =
             (activity as AppCompatActivity).getString(R.string.app_name)
-
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
-
+        // Get the view model holding the list of movies and observe it
         viewModel = ViewModelProvider(this)[MovieListViewModel::class.java]
-
-        Log.i("Movie List", viewModel.movieList.toString())
-        viewModel.movieList.observe(viewLifecycleOwner, Observer { movieList ->
+        viewModel.movieList.observe(viewLifecycleOwner) { movieList ->
             val recyclerView = binding.movieOverviewRv
             movieList?.let {
                 val adapter = MovieListAdapter(it)
                 recyclerView.adapter = adapter
+                // If a movie is clicked, navigate to the details fragment for that movie
                 adapter.setOnItemClickListener(object : MovieListAdapter.OnItemClickListener {
                     override fun onItemClick(itemView: View?, position: Int) {
                         val movieID = viewModel.movieList.value!![position].id
@@ -47,8 +43,9 @@ class MovieListFragment : Fragment() {
                     }
                 })
             }
-        })
+        }
 
+        // Add a divider between each item in the list
         val itemDecoration: RecyclerView.ItemDecoration =
             DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
         binding.movieOverviewRv.addItemDecoration(itemDecoration)
