@@ -48,7 +48,7 @@ class MovieReviewsAdapter(private val reviewList: MutableList<ReviewWithAll>):
             reviewItemUsername.text = review.author
             reviewItemContent.text = review.contentPreview
             Log.i("Rating", review.authorDetails.rating.toString())
-            reviewItemRatingBar.rating = review.authorDetails.rating.toFloat() ?: 0f
+            reviewItemRatingBar.rating = (review.authorDetails.rating / 2).toFloat() ?: 0f
         }
     }
 
