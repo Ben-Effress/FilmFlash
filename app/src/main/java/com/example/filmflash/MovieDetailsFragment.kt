@@ -64,6 +64,9 @@ class MovieDetailsFragment : Fragment() {
                 movieVotes.text = it.vote_count.toString() + " votes"
                 if (it.tagline.isNullOrBlank()) {
                     movieTagline.visibility = View.GONE
+                    val layoutParams = movieTitle.layoutParams as ViewGroup.MarginLayoutParams
+                    layoutParams.bottomMargin = resources.getDimensionPixelSize(R.dimen.margin_20dp)
+                    movieTitle.layoutParams = layoutParams
                 } else {
                     movieTagline.text = it.tagline
                 }
