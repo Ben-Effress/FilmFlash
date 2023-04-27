@@ -38,7 +38,7 @@ class ReviewDetailsFragment : Fragment() {
         binding.apply {
             reviewItemContent.text = spannedContent
             reviewItemUsername.text = author
-            Glide.with(requireContext()).load(avatarPath)
+            if (avatarPath != null) Glide.with(requireContext()).load(avatarPath)
                 .into(reviewItemProfilePicImage)
         }
         if (rating < 0) {  // rating was null
