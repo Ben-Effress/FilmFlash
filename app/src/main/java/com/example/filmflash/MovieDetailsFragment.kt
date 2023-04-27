@@ -45,9 +45,13 @@ class MovieDetailsFragment : Fragment() {
             binding.apply {
                 movieTitle.text = it.title
                 movieRatingBar.rating = (it.vote_average / 2).toFloat()
-                val backdropPath =
-                    "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
-                Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
+                if (it.backdrop_path == null) {
+                    movieBackdrop.setImageResource(R.drawable.logo_horizontal)
+                } else {
+                    val backdropPath =
+                        "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
+                    Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
+                }
                 val hours = it.runtime / 60
                 val mins = it.runtime % 60
                 movieLength.text = hours.toString() + "h " + mins.toString() + "m"
