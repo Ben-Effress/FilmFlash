@@ -38,7 +38,7 @@ class ReviewFragment : Fragment() {
         binding.apply {
             reviewItemContent.text = spannedContent
             reviewItemUsername.text = author
-            reviewItemRatingBar.rating = rating
+            reviewItemRatingBar.rating = rating / 2f
             Glide.with(requireContext()).load(avatarPath)
                 .into(reviewItemProfilePicImage)
         }
