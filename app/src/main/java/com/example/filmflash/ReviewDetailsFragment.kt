@@ -23,11 +23,12 @@ class ReviewDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as AppCompatActivity).supportActionBar?.title =
+            (activity as AppCompatActivity).getString(R.string.review_details)
         // Inflate the layout for this fragment
         _binding = FragmentReviewDetailsBinding.inflate(inflater, container, false)
         val content = args.content
         val author = args.author
-        (activity as AppCompatActivity).supportActionBar?.title = "Review Details"
         val rating = args.rating
         val avatarPath = args.avatarPath
         val markwon = Markwon.create(requireContext())
