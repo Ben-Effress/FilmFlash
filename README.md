@@ -3,7 +3,7 @@ An Android app displaying the movies currently in theaters.
 
 ## Getting Started
 ### API Key
-Create a `apikey.properties` file in the root directory of the project. Add the following line to
+Create an `apikey.properties` file in the root directory of the project. Add the following line to
 the file:
 ```
 API_KEY = "your API key here"
