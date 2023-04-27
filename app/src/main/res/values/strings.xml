@@ -10,4 +10,6 @@
     <string name="genres">Genres</string>
     <string name="overview">Overview</string>
     <string name="languages">Languages</string>
+    <string name="reviews">Reviews</string>
+    <string name="user_profile_picture_description">User Profile Picture</string>
 </resources>
