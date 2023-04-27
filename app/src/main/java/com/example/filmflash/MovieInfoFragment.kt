@@ -53,10 +53,27 @@ class MovieInfoFragment : Fragment() {
                 }
                 movieRating.text = String.format("%.1f", it.vote_average) + "/10"
                 movieVotes.text = it.vote_count.toString() + " votes"
-                if (it.tagline == "") {
+                if (it.tagline.isNullOrBlank()) {
                     movieTagline.visibility = View.GONE
                 }
                 movieReleaseDate.text = it.release_date
+                var genreText = ""
+                for ((index, genre) in it.genres.withIndex()) {
+                    genreText += genre.name
+                    if (index != it.genres.size - 1) {
+                        genreText += ", "
+                    }
+                }
+                movieGenres.text = genreText
+                movieOverview.text = it.overview
+                var languageText = ""
+                for ((index, language) in it.spoken_languages.withIndex()) {
+                    languageText += language.english_name
+                    if (index != it.spoken_languages.size - 1) {
+                        languageText += ", "
+                    }
+                }
+                movieLanguages.text = languageText
 
 
             }
@@ -65,9 +82,19 @@ class MovieInfoFragment : Fragment() {
 
         })
 
-        val textView2 = binding.reviewsTitle
         reviewsViewModel.reviewList.observe(this, Observer {
-            textView2.text = it[0].author
+            binding.apply {
+                reviewsTitle.text = "Reviews (" + it.size.toString() + ")"
+                val reviewRV = reviewListRv
+                if (it.size > 0) {
+                    noReviewsText.visibility = View.GONE
+                    reviewRV.visibility = View.VISIBLE
+                }
+                it?.let{
+                    val adapter = MovieReviewsAdapter(it)
+                    reviewRV.adapter = adapter
+                }
+            }
         })
         return binding.root
     }

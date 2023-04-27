@@ -43,7 +43,7 @@ class MovieReviewsViewModel: ViewModel() {
                         "[*_|~#`\\]\\[()^>]".toRegex(), "")
 
                     val reviewWithAll = ReviewWithAll(review.author,
-                        review.authorDetailsAvatarPath, review.authorDetailsRating, review.content,
+                        review.authorDetails, review.content,
                     spannedContent, contentRemovedMarkdown)
                     reviewsWithAll.add(reviewWithAll)
                 }
