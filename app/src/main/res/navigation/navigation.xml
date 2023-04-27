@@ -28,5 +28,15 @@
         android:id="@+id/reviewFragment"
         android:name="com.example.filmflash.ReviewFragment"
         android:label="fragment_review"
-        tools:layout="@layout/fragment_review_details" />
+        tools:layout="@layout/fragment_review_details" >
+        <argument
+            android:name="content"
+            app:argType="string" />
+        <argument
+            android:name="author"
+            app:argType="string" />
+        <argument
+            android:name="rating"
+            app:argType="float" />
+    </fragment>
 </navigation>

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.filmflash.databinding.FragmentMovieDetailsBinding
 
@@ -93,6 +94,15 @@ class MovieInfoFragment : Fragment() {
                 it?.let{
                     val adapter = MovieReviewsAdapter(it)
                     reviewRV.adapter = adapter
+                    adapter.setOnItemClickListener(object : MovieReviewsAdapter.OnItemClickListener {
+                        override fun onItemClick(itemView: View?, position: Int) {
+                            val content = reviewsViewModel.reviewList.value!![position].content
+                            val author = reviewsViewModel.reviewList.value!![position].author
+                            val rating = reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
+                            val action = MovieInfoFragmentDirections.actionMovieInfoFragment3ToReviewFragment(content, author, rating)
+                            findNavController().navigate(action)
+                        }
+                    })
                 }
             }
         })
