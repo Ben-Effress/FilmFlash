@@ -27,6 +27,8 @@ class MovieDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as AppCompatActivity).supportActionBar?.title =
+            (activity as AppCompatActivity).getString(R.string.movie_details)
         // Inflate the layout for this fragment
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         arguments?.let {
@@ -42,7 +44,6 @@ class MovieDetailsFragment : Fragment() {
         viewModel.movieInfo.observe(viewLifecycleOwner, Observer {
             binding.apply {
                 movieTitle.text = it.title
-                (activity as AppCompatActivity).supportActionBar?.title = "Movie Details"
                 movieRatingBar.rating = (it.vote_average / 2).toFloat()
                 val backdropPath =
                     "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()

@@ -23,7 +23,8 @@ class MovieListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.title = "FilmFlash"
+        (activity as AppCompatActivity).supportActionBar?.title =
+            (activity as AppCompatActivity).getString(R.string.app_name)
 
         _binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
