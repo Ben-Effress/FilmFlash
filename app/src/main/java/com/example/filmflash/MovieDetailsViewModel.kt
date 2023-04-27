@@ -16,7 +16,7 @@ class MovieDetailsViewModel : ViewModel() {
     fun getMovieInfo(movieID: Int) {
         MovieInfoAPI.retrofitService.getMovieInfoFromAPI(
             movieId = movieID,
-            apiKey = "4681e090d7dce827b558f805c05e0c8a"
+            apiKey = BuildConfig.API_KEY
         ).enqueue(object : Callback<MovieInfo> {
             override fun onResponse(call: Call<MovieInfo>, response: Response<MovieInfo>) {
                 _movieInfo.value = response.body()

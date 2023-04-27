@@ -18,7 +18,7 @@ class MovieListViewModel : ViewModel() {
     }
 
     fun getMovieList() {
-        MovieListAPI.retrofitService.getMovieListFromAPI("4681e090d7dce827b558f805c05e0c8a", 1)
+        MovieListAPI.retrofitService.getMovieListFromAPI(BuildConfig.API_KEY, 1)
             .enqueue(object :
                 Callback<MovieListResponse> {
                 override fun onResponse(
