@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -41,6 +42,7 @@ class MovieInfoFragment : Fragment() {
         viewModel.movieInfo.observe(this, Observer {
             binding.apply {
                 movieTitle.text = it.title
+                (activity as AppCompatActivity).supportActionBar?.title = it.title
                 movieRatingBar.rating = (it.vote_average/2).toFloat()
                 val backdropPath = "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
                 Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
