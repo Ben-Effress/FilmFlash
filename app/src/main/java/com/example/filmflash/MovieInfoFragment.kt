@@ -51,8 +51,9 @@ class MovieInfoFragment : Fragment() {
             binding.apply {
                 movieTitle.text = it.title
                 (activity as AppCompatActivity).supportActionBar?.title = it.title
-                movieRatingBar.rating = (it.vote_average/2).toFloat()
-                val backdropPath = "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
+                movieRatingBar.rating = (it.vote_average / 2).toFloat()
+                val backdropPath =
+                    "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
                 Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
                 val hours = it.runtime / 60
                 val mins = it.runtime % 60
@@ -103,12 +104,19 @@ class MovieInfoFragment : Fragment() {
                 it?.let {
                     val adapter = MovieReviewsAdapter(it)
                     reviewRV.adapter = adapter
-                    adapter.setOnItemClickListener(object : MovieReviewsAdapter.OnItemClickListener {
+                    adapter.setOnItemClickListener(object :
+                        MovieReviewsAdapter.OnItemClickListener {
                         override fun onItemClick(itemView: View?, position: Int) {
                             val content = reviewsViewModel.reviewList.value!![position].content
                             val author = reviewsViewModel.reviewList.value!![position].author
-                            val rating = reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
-                            val action = MovieInfoFragmentDirections.actionMovieInfoFragment3ToReviewFragment(content, author, rating)
+                            val rating =
+                                reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
+                            val action =
+                                MovieInfoFragmentDirections.actionMovieInfoFragment3ToReviewFragment(
+                                    content,
+                                    author,
+                                    rating
+                                )
                             findNavController().navigate(action)
                         }
                     })
