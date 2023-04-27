@@ -38,5 +38,9 @@
         <argument
             android:name="rating"
             app:argType="float" />
+        <argument
+            android:name="avatarPath"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

@@ -12,7 +12,7 @@ data class Review(
 data class AuthorDetails(
     val name: String,
     val username: String,
-    @Json(name = "avatar_path") val avatarPath: String?,
+    @Json(name = "avatar_path") var avatarPath: String?,
     val rating: Double
 )
 

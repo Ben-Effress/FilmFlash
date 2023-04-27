@@ -30,8 +30,21 @@ class MovieReviewsAdapter(private val reviewList: MutableList<ReviewWithAll>):
         val review = reviewList[position]
 
         binding.apply {
-//            val avatarPath = "https://image.tmdb.org/t/p/original/" + review.authorDetails.avatarPath
-//            Glide.with(holder.itemView.context).load(avatarPath).into(reviewItemProfilePicImage)
+            val avPath = review.authorDetails.avatarPath
+            if (avPath != null) {
+                if (avPath.indexOf("https") != -1) {
+                    val avatarPath = avPath.substring(1)
+                    Glide.with(holder.itemView.context).load(avatarPath)
+                        .into(reviewItemProfilePicImage)
+                    review.authorDetails.avatarPath = avatarPath
+                } else {
+                    val avatarPath = "https://image.tmdb.org/t/p/original/" + review.authorDetails.avatarPath
+                    Glide.with(holder.itemView.context).load(avatarPath)
+                        .into(reviewItemProfilePicImage)
+                    review.authorDetails.avatarPath = avatarPath
+                }
+            }
+
             reviewItemUsername.text = review.author
             reviewItemContent.text = review.contentPreview
             Log.i("Rating", review.authorDetails.rating.toString())

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.filmflash.databinding.FragmentReviewDetailsBinding
 import io.noties.markwon.Markwon
 
@@ -29,6 +30,7 @@ class ReviewFragment : Fragment() {
         val author = args.author
         (activity as AppCompatActivity).supportActionBar?.title = "Review Details"
         val rating = args.rating
+        val avatarPath = args.avatarPath
         val markwon = Markwon.create(requireContext())
         val markdownContent = content.replace("\\r\\n", "\n")
         val spannedContent = markwon.toMarkdown(markdownContent)
@@ -37,6 +39,8 @@ class ReviewFragment : Fragment() {
             reviewItemContent.text = spannedContent
             reviewItemUsername.text = author
             reviewItemRatingBar.rating = rating
+            Glide.with(requireContext()).load(avatarPath)
+                .into(reviewItemProfilePicImage)
         }
 
         return binding.root
