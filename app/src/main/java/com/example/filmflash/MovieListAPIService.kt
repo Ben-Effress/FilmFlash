@@ -44,7 +44,7 @@ data class Dates(
 
 
 object MovieListAPI {
-    val retrofitService : MovieListAPIService by lazy {
+    val retrofitService: MovieListAPIService by lazy {
         retrofit.create(MovieListAPIService::class.java)
     }
 }

@@ -8,9 +8,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieListViewModel: ViewModel() {
+class MovieListViewModel : ViewModel() {
     private val _movieList = MutableLiveData<MutableList<Movie>>()
-    val movieList : LiveData<MutableList<Movie>>
+    val movieList: LiveData<MutableList<Movie>>
         get() = _movieList
 
     init {
@@ -18,18 +18,22 @@ class MovieListViewModel: ViewModel() {
     }
 
     fun getMovieList() {
-        MovieListAPI.retrofitService.getMovieListFromAPI("4681e090d7dce827b558f805c05e0c8a", 1).enqueue(object:
-            Callback<MovieListResponse> {
-            override fun onResponse(call: Call<MovieListResponse>, response: Response<MovieListResponse>) {
-                _movieList.value = response.body()?.movies?.toMutableList()
-                Log.i("SUI", response.toString())
-            }
+        MovieListAPI.retrofitService.getMovieListFromAPI("4681e090d7dce827b558f805c05e0c8a", 1)
+            .enqueue(object :
+                Callback<MovieListResponse> {
+                override fun onResponse(
+                    call: Call<MovieListResponse>,
+                    response: Response<MovieListResponse>
+                ) {
+                    _movieList.value = response.body()?.movies?.toMutableList()
+                    Log.i("SUI", response.toString())
+                }
 
-            override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
-                Log.i("API", "ERROR: " + t.message)
-            }
+                override fun onFailure(call: Call<MovieListResponse>, t: Throwable) {
+                    Log.i("API", "ERROR: " + t.message)
+                }
 
-        })
+            })
     }
 
 }

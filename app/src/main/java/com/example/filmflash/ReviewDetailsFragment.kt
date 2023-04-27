@@ -6,19 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.filmflash.databinding.FragmentReviewDetailsBinding
 import io.noties.markwon.Markwon
 
-class ReviewFragment : Fragment() {
+class ReviewDetailsFragment : Fragment() {
 
     private var _binding: FragmentReviewDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MovieReviewsViewModel
 
-    private val args: ReviewFragmentArgs by navArgs()
+    private val args: ReviewDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +37,13 @@ class ReviewFragment : Fragment() {
         binding.apply {
             reviewItemContent.text = spannedContent
             reviewItemUsername.text = author
-            reviewItemRatingBar.rating = rating / 2f
             Glide.with(requireContext()).load(avatarPath)
                 .into(reviewItemProfilePicImage)
+        }
+        if (rating < 0) {  // rating was null
+            binding.reviewItemRatingBar.visibility = View.GONE
+        } else {
+            binding.reviewItemRatingBar.rating = rating / 2f
         }
 
         return binding.root

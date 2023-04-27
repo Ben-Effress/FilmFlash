@@ -39,7 +39,7 @@ class MovieListFragment : Fragment() {
                     override fun onItemClick(itemView: View?, position: Int) {
                         val movieID = viewModel.movieList.value!![position].id
                         val action =
-                            MovieListFragmentDirections.actionMovieListFragment2ToMovieInfoFragment3(
+                            MovieListFragmentDirections.actionMovieListFragmentToMovieDetailsFragment(
                                 movieID
                             )
                         findNavController().navigate(action)

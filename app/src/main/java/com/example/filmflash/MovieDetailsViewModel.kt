@@ -8,14 +8,16 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MovieInfoViewModel: ViewModel() {
+class MovieDetailsViewModel : ViewModel() {
     private val _movieInfo = MutableLiveData<MovieInfo>()
     val movieInfo: LiveData<MovieInfo>
         get() = _movieInfo
 
     fun getMovieInfo(movieID: Int) {
-        MovieInfoAPI.retrofitService.getMovieInfoFromAPI(movieId = movieID,
-            apiKey = "4681e090d7dce827b558f805c05e0c8a").enqueue(object: Callback<MovieInfo> {
+        MovieInfoAPI.retrofitService.getMovieInfoFromAPI(
+            movieId = movieID,
+            apiKey = "4681e090d7dce827b558f805c05e0c8a"
+        ).enqueue(object : Callback<MovieInfo> {
             override fun onResponse(call: Call<MovieInfo>, response: Response<MovieInfo>) {
                 _movieInfo.value = response.body()
                 Log.i("SUI", response.toString())

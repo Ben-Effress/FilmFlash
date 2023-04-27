@@ -29,7 +29,7 @@ interface MovieInfoAPIService {
 }
 
 object MovieInfoAPI {
-    val retrofitService : MovieInfoAPIService by lazy {
+    val retrofitService: MovieInfoAPIService by lazy {
         retrofit.create(MovieInfoAPIService::class.java)
     }
 }

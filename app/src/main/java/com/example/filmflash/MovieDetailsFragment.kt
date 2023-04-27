@@ -1,9 +1,7 @@
 package com.example.filmflash
 
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,13 +14,13 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.filmflash.databinding.FragmentMovieDetailsBinding
 
-class MovieInfoFragment : Fragment() {
+class MovieDetailsFragment : Fragment() {
 
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
-    private var movieID = 0
+    private var movieId = 0
 
-    private lateinit var viewModel: MovieInfoViewModel
+    private lateinit var viewModel: MovieDetailsViewModel
     private lateinit var reviewsViewModel: MovieReviewsViewModel
 
     override fun onCreateView(
@@ -32,26 +30,27 @@ class MovieInfoFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
         arguments?.let {
-            movieID = it.getInt("movieID")
+            movieId = it.getInt("movieId")
         }
 
-        viewModel = ViewModelProvider(this)[MovieInfoViewModel::class.java]
-        viewModel.getMovieInfo(movieID)
+        viewModel = ViewModelProvider(this)[MovieDetailsViewModel::class.java]
+        viewModel.getMovieInfo(movieId)
 
         reviewsViewModel = ViewModelProvider(this)[MovieReviewsViewModel::class.java]
-        reviewsViewModel.getReviewsList(requireContext(), movieID)
+        reviewsViewModel.getReviewsList(requireContext(), movieId)
 
-        viewModel.movieInfo.observe(this, Observer {
+        viewModel.movieInfo.observe(viewLifecycleOwner, Observer {
             binding.apply {
                 movieTitle.text = it.title
                 (activity as AppCompatActivity).supportActionBar?.title = "Movie Details"
-                movieRatingBar.rating = (it.vote_average/2).toFloat()
-                val backdropPath = "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
+                movieRatingBar.rating = (it.vote_average / 2).toFloat()
+                val backdropPath =
+                    "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
                 Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
-                val hours = it.runtime/60
-                val mins = it.runtime%60
-                movieLength.text = hours.toString() + "h " + mins.toString() +"m"
-                if(it.adult) {
+                val hours = it.runtime / 60
+                val mins = it.runtime % 60
+                movieLength.text = hours.toString() + "h " + mins.toString() + "m"
+                if (it.adult) {
                     movieAdult.text = "Yes"
                 } else {
                     movieAdult.text = "No"
@@ -79,15 +78,10 @@ class MovieInfoFragment : Fragment() {
                     }
                 }
                 movieLanguages.text = languageText
-
-
             }
-
-
-
         })
 
-        reviewsViewModel.reviewList.observe(this, Observer {
+        reviewsViewModel.reviewList.observe(viewLifecycleOwner, Observer {
             binding.apply {
                 reviewsTitle.text = "Reviews (" + it.size.toString() + ")"
                 val reviewRV = reviewListRv
@@ -95,16 +89,25 @@ class MovieInfoFragment : Fragment() {
                     noReviewsText.visibility = View.GONE
                     reviewRV.visibility = View.VISIBLE
                 }
-                it?.let{
+                it?.let {
                     val adapter = MovieReviewsAdapter(it)
                     reviewRV.adapter = adapter
-                    adapter.setOnItemClickListener(object : MovieReviewsAdapter.OnItemClickListener {
+                    adapter.setOnItemClickListener(object :
+                        MovieReviewsAdapter.OnItemClickListener {
                         override fun onItemClick(itemView: View?, position: Int) {
                             val content = reviewsViewModel.reviewList.value!![position].content
                             val author = reviewsViewModel.reviewList.value!![position].author
-                            val rating = reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
-                            val avatarPath = reviewsViewModel.reviewList.value!![position].authorDetails.avatarPath
-                            val action = MovieInfoFragmentDirections.actionMovieInfoFragment3ToReviewFragment(content, author, rating, avatarPath)
+                            val rating =
+                                reviewsViewModel.reviewList.value!![position].authorDetails.rating.toFloat()
+                            val avatarPath =
+                                reviewsViewModel.reviewList.value!![position].authorDetails.avatarPath
+                            val action =
+                                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewDetailsFragment(
+                                    content,
+                                    author,
+                                    rating,
+                                    avatarPath
+                                )
                             findNavController().navigate(action)
                         }
                     })

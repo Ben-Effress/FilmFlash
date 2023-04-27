@@ -3,32 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/movieListFragment2">
+    app:startDestination="@id/movieListFragment">
     <fragment
-        android:id="@+id/movieListFragment2"
+        android:id="@+id/movieListFragment"
         android:name="com.example.filmflash.MovieListFragment"
-        android:label="MovieListFragment" >
+        android:label="MovieListFragment">
         <action
-            android:id="@+id/action_movieListFragment2_to_movieInfoFragment3"
-            app:destination="@id/movieInfoFragment3" />
+            android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/movieInfoFragment3"
-        android:name="com.example.filmflash.MovieInfoFragment"
-        android:label="fragment_movie_info"
-        tools:layout="@layout/fragment_movie_details" >
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.example.filmflash.MovieDetailsFragment"
+        android:label="fragment_movie_details"
+        tools:layout="@layout/fragment_movie_details">
         <argument
-            android:name="movieID"
+            android:name="movieId"
             app:argType="integer" />
         <action
-            android:id="@+id/action_movieInfoFragment3_to_reviewFragment"
-            app:destination="@id/reviewFragment" />
+            android:id="@+id/action_movieDetailsFragment_to_reviewDetailsFragment"
+            app:destination="@id/reviewDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/reviewFragment"
-        android:name="com.example.filmflash.ReviewFragment"
-        android:label="fragment_review"
-        tools:layout="@layout/fragment_review_details" >
+        android:id="@+id/reviewDetailsFragment"
+        android:name="com.example.filmflash.ReviewDetailsFragment"
+        android:label="fragment_review_details"
+        tools:layout="@layout/fragment_review_details">
         <argument
             android:name="content"
             app:argType="string" />
