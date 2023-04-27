@@ -1,12 +1,14 @@
 package com.example.filmflash
 
-import android.opengl.Visibility
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -31,6 +33,11 @@ class MovieInfoFragment : Fragment() {
             movieID = it.getInt("movieID")
         }
 
+        // Share button
+        binding.shareButton.setOnClickListener {
+            shareMovie()
+        }
+
         viewModel = ViewModelProvider(this)[MovieInfoViewModel::class.java]
         viewModel.getMovieInfo(movieID)
 
@@ -40,13 +47,14 @@ class MovieInfoFragment : Fragment() {
         viewModel.movieInfo.observe(this, Observer {
             binding.apply {
                 movieTitle.text = it.title
-                movieRatingBar.rating = (it.vote_average/2).toFloat()
-                val backdropPath = "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
+                movieRatingBar.rating = (it.vote_average / 2).toFloat()
+                val backdropPath =
+                    "https://image.tmdb.org/t/p/original/" + it.backdrop_path.toString()
                 Glide.with(requireContext()).load(backdropPath).into(movieBackdrop)
-                val hours = it.runtime/60
-                val mins = it.runtime%60
-                movieLength.text = hours.toString() + "h " + mins.toString() +"m"
-                if(it.adult) {
+                val hours = it.runtime / 60
+                val mins = it.runtime % 60
+                movieLength.text = hours.toString() + "h " + mins.toString() + "m"
+                if (it.adult) {
                     movieAdult.text = "Yes"
                 } else {
                     movieAdult.text = "No"
@@ -79,7 +87,6 @@ class MovieInfoFragment : Fragment() {
             }
 
 
-
         })
 
         reviewsViewModel.reviewList.observe(this, Observer {
@@ -90,7 +97,7 @@ class MovieInfoFragment : Fragment() {
                     noReviewsText.visibility = View.GONE
                     reviewRV.visibility = View.VISIBLE
                 }
-                it?.let{
+                it?.let {
                     val adapter = MovieReviewsAdapter(it)
                     reviewRV.adapter = adapter
                 }
@@ -99,9 +106,30 @@ class MovieInfoFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.share_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
+    private fun shareMovie() {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT, getString(
+                R.string.share_template,
+                binding.movieTitle.text,
+                binding.movieReleaseDate.text
+            )
+        )
+        try {
+            startActivity(Intent.createChooser(shareIntent, getString(R.string.share_prompt)))
+        } catch (e: Exception) {
+            Toast.makeText(context, getString(R.string.share_error), Toast.LENGTH_SHORT).show()
+        }
+    }
 }

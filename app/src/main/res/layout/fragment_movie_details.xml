@@ -35,6 +35,17 @@
             app:layout_constraintStart_toStartOf="@+id/movie_backdrop"
             app:layout_constraintTop_toTopOf="@+id/movie_backdrop" />
 
+        <ImageView
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:contentDescription="@string/share_button_description"
+            android:src="@drawable/share_icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
             android:id="@+id/movie_tagline"
             android:layout_width="0dp"
