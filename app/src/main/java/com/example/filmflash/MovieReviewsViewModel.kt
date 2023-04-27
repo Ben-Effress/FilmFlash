@@ -11,7 +11,7 @@ import retrofit2.Response
 import io.noties.markwon.Markwon
 
 
-class MovieReviewsViewModel: ViewModel() {
+class MovieReviewsViewModel : ViewModel() {
     private val _reviewsList = MutableLiveData<MutableList<ReviewWithAll>>()
     val reviewList: LiveData<MutableList<ReviewWithAll>>
         get() = _reviewsList
@@ -31,7 +31,7 @@ class MovieReviewsViewModel: ViewModel() {
                 val reviews = response.body()?.results
                 val markwon = Markwon.builder(context).build()
                 val reviewsWithAll = mutableListOf<ReviewWithAll>()
-                reviews?.forEach{review: Review ->
+                reviews?.forEach { review: Review ->
 
                     val reviewContent = review.content
                     val markdownContent = reviewContent.replace("\\r\\n", "\n")
@@ -40,11 +40,14 @@ class MovieReviewsViewModel: ViewModel() {
 
                     val contentReplacedNewLines = reviewContent.replace("\\r\\n", " ")
                     val contentRemovedMarkdown = contentReplacedNewLines.replace(
-                        "[*_|~#`\\]\\[()^>]".toRegex(), "")
+                        "[*_|~#`\\]\\[()^>]".toRegex(), ""
+                    )
 
-                    val reviewWithAll = ReviewWithAll(review.author,
+                    val reviewWithAll = ReviewWithAll(
+                        review.author,
                         review.authorDetails, review.content,
-                    spannedContent, contentRemovedMarkdown)
+                        spannedContent, contentRemovedMarkdown
+                    )
                     reviewsWithAll.add(reviewWithAll)
                 }
                 _reviewsList.value = reviewsWithAll.toMutableList()

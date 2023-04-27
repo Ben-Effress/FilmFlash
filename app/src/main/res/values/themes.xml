@@ -7,10 +7,4 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
     </style>
-
-    <style name="CustomRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
-        <item name="android:minHeight">23dip</item>
-        <item name="android:maxHeight">25dip</item>
-    </style>
 </resources>

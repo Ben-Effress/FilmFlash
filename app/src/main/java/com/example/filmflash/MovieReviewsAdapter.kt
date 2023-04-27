@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmflash.databinding.ReviewItemBinding
 
-class MovieReviewsAdapter(private val reviewList: MutableList<ReviewWithAll>):
+class MovieReviewsAdapter(private val reviewList: MutableList<ReviewWithAll>) :
     RecyclerView.Adapter<MovieReviewsAdapter.ReviewItemHolder>() {
 
     private var _binding: ReviewItemBinding? = null
@@ -38,7 +38,8 @@ class MovieReviewsAdapter(private val reviewList: MutableList<ReviewWithAll>):
                         .into(reviewItemProfilePicImage)
                     review.authorDetails.avatarPath = avatarPath
                 } else {
-                    val avatarPath = "https://image.tmdb.org/t/p/original/" + review.authorDetails.avatarPath
+                    val avatarPath =
+                        "https://image.tmdb.org/t/p/original/" + review.authorDetails.avatarPath
                     Glide.with(holder.itemView.context).load(avatarPath)
                         .into(reviewItemProfilePicImage)
                     review.authorDetails.avatarPath = avatarPath
@@ -48,14 +49,18 @@ class MovieReviewsAdapter(private val reviewList: MutableList<ReviewWithAll>):
             reviewItemUsername.text = review.author
             reviewItemContent.text = review.contentPreview
             Log.i("Rating", review.authorDetails.rating.toString())
-            reviewItemRatingBar.rating = review.authorDetails.rating.toFloat() ?: 0f
+            reviewItemRatingBar.rating = (review.authorDetails.rating / 2).toFloat() ?: 0f
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieReviewsAdapter.ReviewItemHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MovieReviewsAdapter.ReviewItemHolder {
         _binding = ReviewItemBinding.inflate(
             LayoutInflater.from(parent.context), parent,
-            false)
+            false
+        )
         return ReviewItemHolder(binding.root)
     }
 

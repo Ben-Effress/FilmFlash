@@ -10,8 +10,6 @@ import retrofit2.http.Path
 
 private const val BASE_URL = "https://api.themoviedb.org/3/movie/"
 
-private const val API_KEY = "4681e090d7dce827b558f805c05e0c8a"
-
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
@@ -22,13 +20,13 @@ private val retrofit = Retrofit.Builder()
     .build()
 
 interface MovieReviewsAPIService {
-    @GET("{movie_id}/reviews?api_key=$API_KEY")
+    @GET("{movie_id}/reviews?api_key=${BuildConfig.API_KEY}")
     fun getMovieReviewsFromAPI(@Path("movie_id") movieID: Int):
             Call<MovieReview>
 }
 
 object MovieReviewsAPI {
-    val retrofitService : MovieReviewsAPIService by lazy {
+    val retrofitService: MovieReviewsAPIService by lazy {
         retrofit.create(MovieReviewsAPIService::class.java)
     }
 }
