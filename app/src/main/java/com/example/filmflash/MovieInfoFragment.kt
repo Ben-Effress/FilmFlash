@@ -16,6 +16,7 @@ class MovieInfoFragment : Fragment() {
     private var movieID = 0
 
     private lateinit var viewModel: MovieInfoViewModel
+    private lateinit var reviewsViewModel: MovieReviewsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,10 +30,19 @@ class MovieInfoFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[MovieInfoViewModel::class.java]
         viewModel.getMovieInfo(movieID)
+
+        reviewsViewModel = ViewModelProvider(this)[MovieReviewsViewModel::class.java]
+        reviewsViewModel.getReviewsList(requireContext(), movieID)
+
         val textView = binding.textView
-        textView.text = movieID.toString()
+
         viewModel.movieInfo.observe(this, Observer {
             textView.text = it.title
+        })
+
+        val textView2 = binding.textView2
+        reviewsViewModel.reviewList.observe(this, Observer {
+            textView2.text = it[0].author
         })
         return binding.root
     }

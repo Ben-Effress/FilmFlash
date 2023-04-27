@@ -6,6 +6,13 @@ data class Review(
     val authorDetailsAvatarPath: String?,
     val authorDetailsRating: Double?,
     val content: String,
-    var formattedContent: Spanned? = null,
-    var contentPreview: String = ""
+)
+
+data class ReviewWithAll(
+    val author: String,
+    val authorDetailsAvatarPath: String?,
+    val authorDetailsRating: Double?,
+    val content: String,
+    var formattedContent: Spanned,
+    var contentPreview: String
 )
