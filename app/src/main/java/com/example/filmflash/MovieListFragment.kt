@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmflash.databinding.FragmentMovieListBinding
 
 class MovieListFragment : Fragment() {
@@ -34,13 +36,19 @@ class MovieListFragment : Fragment() {
                 adapter.setOnItemClickListener(object : MovieListAdapter.OnItemClickListener {
                     override fun onItemClick(itemView: View?, position: Int) {
                         val movieID = viewModel.movieList.value!![position].id
-                        val action = MovieListFragmentDirections.actionMovieListFragment2ToMovieInfoFragment3(movieID)
+                        val action =
+                            MovieListFragmentDirections.actionMovieListFragment2ToMovieInfoFragment3(
+                                movieID
+                            )
                         findNavController().navigate(action)
                     }
                 })
             }
-
         })
+
+        val itemDecoration: RecyclerView.ItemDecoration =
+            DividerItemDecoration(this.context, DividerItemDecoration.VERTICAL)
+        binding.movieOverviewRv.addItemDecoration(itemDecoration)
 
         return binding.root
     }
