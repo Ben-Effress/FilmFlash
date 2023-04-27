@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.example.filmflash.databinding.FragmentReviewBinding
+import com.example.filmflash.databinding.FragmentReviewDetailsBinding
 
 class ReviewFragment : Fragment() {
 
-    private var _binding: FragmentReviewBinding? = null
+    private var _binding: FragmentReviewDetailsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: MovieReviewsViewModel
 
@@ -19,11 +19,9 @@ class ReviewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentReviewBinding.inflate(inflater, container, false)
+        _binding = FragmentReviewDetailsBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this)[MovieReviewsViewModel::class.java]
-
-        val textView = binding.textView
 
 
 
